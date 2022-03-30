@@ -119,32 +119,32 @@ qiime phylogeny align-to-tree-mafft-fasttree \
 
 ###ITS pre-processing###
 
-#Make a new directory to store 16S analysis outputs
-mkdir meth-dev-16S
+#Make a new directory to store ITS analysis outputs
+mkdir meth-dev-its
 
-#Move into the meth-dev-16S directory
-cd meth-dev-16S
+#Move into the meth-dev-its directory
+cd meth-dev-its
 
-#Make a new directory for 16S FastQC reports
-mkdir fastqc-reports
+#Make a new directory for ITS FastQC reports
+mkdir fastqc-reports-its
 
-#Run FastQC on raw 16S data to assess quality
-fastqc /home/qiime2/meth-dev-16S-files/* -O fastqc-reports
+#Run FastQC on raw ITS data to assess quality
+fastqc /home/qiime2/meth-dev-its-files/* -O fastqc-reports-its
 
-#Use MulitQC to compile a QC report of all 16S samples
-multiqc -n meth-dev-16S-report fastqc-reports
+#Use MulitQC to compile a QC report of all ITS samples
+multiqc -n meth-dev-its-report fastqc-reports-its
 
 #Import demultiplexed data in Casava 1.8 demultiplexed (paired-end) format to generate .qza file
 qiime tools import   --type 'SampleData[PairedEndSequencesWithQuality]' \  
---input-path /home/qiime2/meth-dev-16S-files \   
+--input-path /home/qiime2/meth-dev-its-files \   
 --input-format CasavaOneEightSingleLanePerSampleDirFmt \  
---output-path meth-dev-16S.qza 
+--output-path meth-dev-its.qza 
 
 #Create a .qzv file to summarise and visualise the demultiplexed data (view the .qzv file by dragging and dropping the file at https://view.qiime2.org)
 #The number of reads per sample and an interactive quality plot can be viewed to assess quality
 qiime demux summarize \
---i-data meth-dev-16S.qza \
---o-visualization meth-dev-16S-summary.qzv
+--i-data meth-dev-its.qza \
+--o-visualization meth-dev-its-summary.qzv
 
 #Use the cutadapt plugin to trim primer sequences from the reads and generate a new trimmed .qza file
 qiime cutadapt trim-paired \
