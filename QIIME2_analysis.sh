@@ -178,22 +178,22 @@ qiime dada2 denoise-paired \
 --o-representative-sequences meth-dev-its-trimmed-rep-seqs.qza \
 --o-denoising-stats meth-dev-its-trimmed-denoising-stats.qza
 
-#Create .qzv files to summarise and visualise the denoising stats, representative sequences and the ASV table (https://view.qiime2.org)
+#Create .qzv files to summarise and visualise the ITS denoising stats, representative sequences and the ASV table (https://view.qiime2.org)
 qiime metadata tabulate \
---m-input-file meth-dev-16S-trimmed-denoising-stats.qza \
---o-visualization meth-dev-16S-trimmed-denoising-stats.qzv
+--m-input-file meth-dev-its-trimmed-denoising-stats.qza \
+--o-visualization meth-dev-its-trimmed-denoising-stats.qzv
 
 qiime feature-table summarize \
---i-table meth-dev-16S-trimmed-table.qza \
---o-visualization meth-dev-16S-trimmed-table.qzv \
---m-sample-metadata-file meth-dev-metadata-16S.tsv
+--i-table meth-dev-its-trimmed-table.qza \
+--o-visualization meth-dev-its-trimmed-table.qzv \
+--m-sample-metadata-file meth-dev-metadata-its.tsv
 
 qiime feature-table tabulate-seqs \
---i-data meth-dev-16S-trimmed-rep-seqs.qza \
---o-visualization meth-dev-16S-trimmed-rep-seqs.qzv
+--i-data meth-dev-its-trimmed-rep-seqs.qza \
+--o-visualization meth-dev-its-trimmed-rep-seqs.qzv
 
-#The next step is to assign taxonomy to the representative sequences using a Naive Bayes classifier trained on 16S V3-V4 sequences
-#from the SILVA database (Version 138) with the ‘q2-feature-classifier’ 
+#The next step is to assign taxonomy to the representative sequences using a Naive Bayes classifier trained on full lenggth ITS sequences
+#from the UNITE database  with the ‘q2-feature-classifier’ 
 
 #First download the full length reference sequences (clustered at 99% sequence similarity) and their associated taxonomy (available from the QIIME2 website)
 wget --no-check-certificate https://data.qiime2.org/2020.8/common/silva-138-99-seqs.qza
