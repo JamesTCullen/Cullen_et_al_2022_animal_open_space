@@ -201,6 +201,32 @@ wget https://files.plutof.ut.ee/public/orig/C5/54/C5547B97AAA979E45F79DC4C8C4B12
 #Decompress the tar.qz file
 tar xzf C5547B97AAA979E45F79DC4C8C4B12113389343D7588716B5AD330F8BDB300C9.tgz 
 
+#Move into the developer directory
+cd sh_qiime_release_10.05.2021/developer
+
+#Import the reference sequences and a .qza file
+qiime tools import --type FeatureData[Sequence] \
+--input-path sh_refs_qiime_ver8_99_10.05.2021_dev.fasta \
+--output-path unite-ver8-seqs_99_10.05.2021.qza
+
+#Import the taxonomy file
+qiime tools import   --type FeatureData[Taxonomy] \
+--input-path sh_taxonomy_qiime_ver8_99_10.05.2021_dev.txt \
+--output-path unite-ver8-taxonomy_99_10.05.2021.qza \
+--input-format HeaderlessTSVTaxonomyFormat
+
+#Train the classifier
+qiime feature-classifier fit-classifier-naive-bayes \
+--i-reference-reads unite-ver8-seqs_99_10.05.2021.qza \
+--i-reference-taxonomy unite-ver8-taxonomy_99_10.05.2021.qza \
+--o-classifier unite-ver8-99-classifier-10.05.2021.qza
+
+
+
+
+
+
+
 
 
 
