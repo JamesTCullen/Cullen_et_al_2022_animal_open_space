@@ -193,11 +193,17 @@ qiime feature-table tabulate-seqs \
 --o-visualization meth-dev-its-trimmed-rep-seqs.qzv
 
 #The next step is to assign taxonomy to the representative sequences using a Naive Bayes classifier trained on full lenggth ITS sequences
-#from the UNITE database  with the ‘q2-feature-classifier’ 
+#from the UNITE database with the ‘q2-feature-classifier’ 
 
-#First download the full length reference sequences (clustered at 99% sequence similarity) and their associated taxonomy (available from the QIIME2 website)
-wget --no-check-certificate https://data.qiime2.org/2020.8/common/silva-138-99-seqs.qza
-wget --no-check-certificate https://data.qiime2.org/2020.8/common/silva-138-99-tax.qza
+#First download the QIIME release of the UNITE database (version 8.3 - release date 2021-05-10) 
+wget https://files.plutof.ut.ee/public/orig/C5/54/C5547B97AAA979E45F79DC4C8C4B12113389343D7588716B5AD330F8BDB300C9.tgz
+
+#Decompress the tar.qz file
+tar xzf C5547B97AAA979E45F79DC4C8C4B12113389343D7588716B5AD330F8BDB300C9.tgz 
+
+
+
+
 
 #Extract the V3-V4 region from the full length SILVA reference sequences using the V3-V4 primer sequences prior to training the classifier
 qiime feature-classifier extract-reads \
