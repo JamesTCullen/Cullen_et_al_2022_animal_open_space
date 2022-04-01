@@ -119,6 +119,7 @@ qiime phylogeny align-to-tree-mafft-fasttree \
 --o-tree meth-dev-16S-trimmed-unrooted-tree.qza \
 --o-rooted-tree meth-dev-16S-trimmed-rooted-tree.qza
 
+#########################################################################################################################################################
 
 ###ITS pre-processing###
 
@@ -220,6 +221,17 @@ qiime feature-classifier fit-classifier-naive-bayes \
 --i-reference-reads unite-ver8-seqs_99_10.05.2021.qza \
 --i-reference-taxonomy unite-ver8-taxonomy_99_10.05.2021.qza \
 --o-classifier unite-ver8-99-classifier-10.05.2021.qza
+
+#Move back to its directory
+cd /home/qiime2/meth-dev-its
+
+#Assign taxonomy
+qiime feature-classifier classify-sklearn \
+--i-classifier sh_qiime_release_10.05.2021/developer/unite-ver8-99-classifier-10.05.2021.qza \
+--i-reads meth-dev-its-trimmed-rep-seqs.qza \
+--o-classification meth-dev-its-taxonomy.qza 
+
+
 
 
 
