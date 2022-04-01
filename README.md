@@ -1,4 +1,4 @@
-# Cullen_et_al_2022_animal_open_space
+# Cullen_et_al_2022_Animal_Open_Space
 
 The scripts contained in this repository were used to perform analysis and generate figures for the following publication: J. T. Cullen, P.G. Lawlor, P. Cormican, F. Crispie and G.E. Gardiner. Optimisation of a bead-beating procedure for simultaneous extraction of bacterial and fungal DNA from pig faeces and liquid feed for 16S and ITS2 rDNA amplicon sequencing. Animal - Open Space (submitted).
 
