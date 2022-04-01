@@ -8,7 +8,7 @@
 #Read 1 and read 2 of the 16S rDNA sequences were truncated at 267 and 183 bp, respectively, while ITS2 sequences were truncated at 266 and 187 bp, respectively. 
 #For bacterial sequences, taxonomy was assigned to each ASV using a Naive Bayes classifier trained on 16S V3-V4 sequences from the Silva database (Version 138) 
 #with the ‘q2-feature-classifier’ plugin, while taxonomy was assigned to fungal ASVs using a Naive Bayes classifier trained on full-length ITS sequences 
-#from the UNITE v.8.3 database (Kõljalg et al., 2013).
+#from the UNITE (version 8.3) database (Kõljalg et al., 2013).
 
 ###16S pre-processing###
 
