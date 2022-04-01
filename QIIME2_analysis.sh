@@ -119,6 +119,8 @@ qiime phylogeny align-to-tree-mafft-fasttree \
 --o-tree meth-dev-16S-trimmed-unrooted-tree.qza \
 --o-rooted-tree meth-dev-16S-trimmed-rooted-tree.qza
 
+#See R script to import QIIME2 artifacts into R for further analysis
+
 #########################################################################################################################################################
 
 ###ITS pre-processing###
@@ -241,6 +243,10 @@ qiime phylogeny align-to-tree-mafft-fasttree \
 --o-masked-alignment meth-dev-its-trimmed-rep-seqs-masked-aligned.qza \
 --o-tree meth-dev-its-trimmed-unrooted-tree.qza \
 --o-rooted-tree meth-dev-its-trimmed-rooted-tree.qza
+
+#See R script to import QIIME2 artifacts into R for further analysis
+
+########################################################### END ##################################################################################
 
 
 
