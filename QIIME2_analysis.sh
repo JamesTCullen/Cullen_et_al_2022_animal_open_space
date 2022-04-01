@@ -225,53 +225,22 @@ qiime feature-classifier fit-classifier-naive-bayes \
 #Move back to its directory
 cd /home/qiime2/meth-dev-its
 
-#Assign taxonomy
+#Assign taxonomy to the ITS sequences using the classifier trained on the full length ITS sequences from UNITE
 qiime feature-classifier classify-sklearn \
 --i-classifier sh_qiime_release_10.05.2021/developer/unite-ver8-99-classifier-10.05.2021.qza \
 --i-reads meth-dev-its-trimmed-rep-seqs.qza \
---o-classification meth-dev-its-taxonomy.qza 
-
-
-
-
-
-
-
-
-
-
-
-
-
-#Extract the V3-V4 region from the full length SILVA reference sequences using the V3-V4 primer sequences prior to training the classifier
-qiime feature-classifier extract-reads \
-  --i-sequences silva-138-99-seqs.qza \
-  --p-f-primer CCTACGGGNGGCWGCAG \
-  --p-r-primer GGACTACNVGGGTWTCTAAT \ 
-  --o-reads V3V4-ref-seqs.qza
-
-#Train the classifier on the V3-V4 sequences
-qiime feature-classifier fit-classifier-naive-bayes  \
-    --i-reference-reads V3V4-ref-seqs.qza \
-    --i-reference-taxonomy silva-138-99-tax.qza \
-    --o-classifier silva_138_99_nb_classifier.qza
-    
-#Assign taxonomy to our sequences using the classifier trained on the V3-V4 sequences from SILVA 
-qiime feature-classifier classify-sklearn \
---i-classifier silva-138-99-nb-classifier.qza \
---i-reads meth-dev-16S-trimmed-rep-seqs.qza \
---o-classification meth-dev-16S-trimmed-taxonomy.qza 
+--o-classification meth-dev-its-trimmed-taxonomy.qza 
 
 #Create and visualise a .qzv file of the taxonomy (https://view.qiime2.org)
-qiime metadata tabulate   --m-input-file meth-dev-16S-trimmed-taxonomy.qza   --o-visualization meth-dev-16S-trimmed-taxonomy.qzv
+qiime metadata tabulate   --m-input-file meth-dev-its-trimmed-taxonomy.qza   --o-visualization meth-dev-its-trimmed-taxonomy.qzv
 
 #Finally, create a phylogenetic tree (this is required for importing QIIME2 artifacts into R using the qiime2R package)
 qiime phylogeny align-to-tree-mafft-fasttree \
---i-sequences meth-dev-16S-trimmed-rep-seqs.qza \
---o-alignment meth-dev-16S-trimmed-rep-seqs-aligned.qza \
---o-masked-alignment meth-dev-16S-trimmed-rep-seqs-masked-aligned.qza \
---o-tree meth-dev-16S-trimmed-unrooted-tree.qza \
---o-rooted-tree meth-dev-16S-trimmed-rooted-tree.qza
+--i-sequences meth-dev-its-trimmed-rep-seqs.qza \
+--o-alignment meth-dev-its-trimmed-rep-seqs-aligned.qza \
+--o-masked-alignment meth-dev-its-trimmed-rep-seqs-masked-aligned.qza \
+--o-tree meth-dev-its-trimmed-unrooted-tree.qza \
+--o-rooted-tree meth-dev-its-trimmed-rooted-tree.qza
 
 
 
