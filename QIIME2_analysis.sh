@@ -39,7 +39,7 @@ qiime demux summarize \
 --i-data meth-dev-16S.qza \
 --o-visualization meth-dev-16S-summary.qzv
 
-#Use the cutadapt plugin to trim primer sequences from the reads and generate a new trimmed .qza file
+#Use the cutadapt plugin to trim V3-V4 region primer sequences from the reads and generate a new trimmed .qza file
 qiime cutadapt trim-paired \
 --i-demultiplexed-sequences meth-dev-16S.qza \
 --p-front-f CCTACGGGNGGCWGCAG \
@@ -48,7 +48,9 @@ qiime cutadapt trim-paired \
 
 #Create a new .qzv file to summarise and visualise the trimmed data (https://view.qiime2.org)
 #Use the interactive quality plot to assess truncation parameters prior to DADA2 processing
-qiime demux summarize  --i-data meth-dev-16S-trimmed.qza  --o-visualization meth-dev-16S-trimmed-demuz.qzv
+qiime demux summarize \
+--i-data meth-dev-16S-trimmed.qza \
+--o-visualization meth-dev-16S-trimmed-summary.qzv
 
 #Use DADA2 plugin to denoise and dereplicate sequences, to remove chimeric sequences, merge reads and generate the amplicon sequence variant (ASV) 
 #table, representaive sequences, and denoising stats 
@@ -61,7 +63,6 @@ qiime dada2 denoise-paired \
 --p-trunc-len-f 267 \
 --p-trunc-len-r 183 \
 --o-table meth-dev-16S-trimmed-table.qza \
---p-n-threads 0 \
 --o-representative-sequences meth-dev-16S-trimmed-rep-seqs.qza \
 --o-denoising-stats meth-dev-16S-trimmed-denoising-stats.qza
 
@@ -106,7 +107,9 @@ qiime feature-classifier classify-sklearn \
 --o-classification meth-dev-16S-trimmed-taxonomy.qza 
 
 #Create and visualise a .qzv file of the taxonomy (https://view.qiime2.org)
-qiime metadata tabulate   --m-input-file meth-dev-16S-trimmed-taxonomy.qza   --o-visualization meth-dev-16S-trimmed-taxonomy.qzv
+qiime metadata tabulate \
+--m-input-file meth-dev-16S-trimmed-taxonomy.qza \
+--o-visualization meth-dev-16S-trimmed-taxonomy.qzv
 
 #Finally, create a phylogenetic tree (this is required for importing QIIME2 artifacts into R using the qiime2R package)
 qiime phylogeny align-to-tree-mafft-fasttree \
@@ -134,7 +137,7 @@ fastqc /home/qiime2/meth-dev-its-files/* -O fastqc-reports-its
 #Use MulitQC to compile a QC report of all ITS samples
 multiqc -n meth-dev-its-report fastqc-reports-its
 
-#Import demultiplexed data in Casava 1.8 demultiplexed (paired-end) format to generate .qza file
+#Import demultiplexed ITS data in Casava 1.8 demultiplexed (paired-end) format to generate .qza file
 qiime tools import   --type 'SampleData[PairedEndSequencesWithQuality]' \  
 --input-path /home/qiime2/meth-dev-its-files \   
 --input-format CasavaOneEightSingleLanePerSampleDirFmt \  
@@ -146,31 +149,34 @@ qiime demux summarize \
 --i-data meth-dev-its.qza \
 --o-visualization meth-dev-its-summary.qzv
 
-#Use the cutadapt plugin to trim primer sequences from the reads and generate a new trimmed .qza file
+#Use the cutadapt plugin to trim ITS primer sequences from the reads and generate a new trimmed .qza file
 qiime cutadapt trim-paired \
---i-demultiplexed-sequences meth-dev-16S.qza \
---p-front-f CCTACGGGNGGCWGCAG \
---p-front-r GACTACHVGGGTATCTAATCC \
---o-trimmed-sequences meth-dev-16S-trimmed.qza
+--i-demultiplexed-sequences meth-dev-its.qza \
+--p-adapter-f GCATATCAATAAGCGGAGGA \
+--p-front-f GCATCGATGAAGAACGCAGC \
+--p-adapter-r GCTGCGTTCTTCATCGATGC \
+--p-front-r TCCTCCGCTTATTGATATGC \
+--o-trimmed-sequences meth-dev-its-trimmed.qza
 
-#Create a new .qzv file to summarise and visualise the trimmed data (https://view.qiime2.org)
+#Create a new .qzv file to summarise and visualise the trimmed ITS data (https://view.qiime2.org)
 #Use the interactive quality plot to assess truncation parameters prior to DADA2 processing
-qiime demux summarize  --i-data meth-dev-16S-trimmed.qza  --o-visualization meth-dev-16S-trimmed-demuz.qzv
+qiime demux summarize \
+--i-data meth-dev-its-trimmed.qza \
+--o-visualization meth-dev-its-trimmed-summary.qzv
 
 #Use DADA2 plugin to denoise and dereplicate sequences, to remove chimeric sequences, merge reads and generate the amplicon sequence variant (ASV) 
 #table, representaive sequences, and denoising stats 
 #Set truncation parameters for read 1 and read 2 based on quality scores to remove low quality bases 
 # The default minimum overlap required by DADA2 to merge read 1 and read 2 is 12 bases)
 qiime dada2 denoise-paired \
---i-demultiplexed-seqs meth-dev-16S-trimmed.qza \
+--i-demultiplexed-seqs meth-dev-its-trimmed.qza \
 --p-trim-left-f 0 \
 --p-trim-left-r 0 \
---p-trunc-len-f 267 \
---p-trunc-len-r 183 \
---o-table meth-dev-16S-trimmed-table.qza \
---p-n-threads 0 \
---o-representative-sequences meth-dev-16S-trimmed-rep-seqs.qza \
---o-denoising-stats meth-dev-16S-trimmed-denoising-stats.qza
+--p-trunc-len-f 266 \
+--p-trunc-len-r 187 \
+--o-table meth-dev-its-trimmed-table.qza \
+--o-representative-sequences meth-dev-its-trimmed-rep-seqs.qza \
+--o-denoising-stats meth-dev-its-trimmed-denoising-stats.qza
 
 #Create .qzv files to summarise and visualise the denoising stats, representative sequences and the ASV table (https://view.qiime2.org)
 qiime metadata tabulate \
